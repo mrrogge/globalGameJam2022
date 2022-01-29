@@ -145,7 +145,8 @@ class MapLayerBuilder {
                             coms.kindComs[id] = com.Kind.HERO;
                             coms.mass[id] = 20;
                             coms.velocities[id] = new com.Velocity(0, 0, 
-                                mapObject.x, mapObject.y);
+                                mapObject.x, mapObject.y, 150, 150);
+                            coms.heroStates[id] = new com.HeroState();
                         }
                     }
                 }

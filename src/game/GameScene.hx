@@ -12,6 +12,8 @@ class GameScene extends Scene {
     var inputSys:InputSys;
     var moveSys:MoveSys;
     var scrollingBitmapSys:ScrollingBitmapSys;
+    var heroMoveSys:HeroMoveSys;
+    var frictionSys:FrictionSys;
 
     override public function new(app:App)
     {
@@ -26,28 +28,12 @@ class GameScene extends Scene {
         inputSys = new InputSys(coms.userInputConfigs);
         moveSys = new MoveSys(coms);
         scrollingBitmapSys = new ScrollingBitmapSys(coms);
+        heroMoveSys = new HeroMoveSys(coms);
+        frictionSys = new FrictionSys(coms);
 
         //events
         separationSys.onCollisionSlot.connect(collisionSys.collisionSignal);
-        inputSys.actionSignal.connect(new heat.event.Slot(
-            (arg:input.EAction<ActionBoolKind, ActionOnceKind>)->{
-                switch arg {
-                    case ONCE(RESET): {
-                        var object = coms.objects["hero"];
-                        if (object == null) return;
-                        object.x = 0;
-                        object.y = 0;
-                        var vel = coms.velocities["hero"];
-                        if (vel == null) return;
-                        vel.x = 0;
-                        vel.y = 0;
-                        vel.prevPos.x = 0;
-                        vel.prevPos.y = 0;
-                    }
-                    default: {}
-                }
-            }
-        ));
+        heroMoveSys.actionSlot.connect(inputSys.actionSignal);
         inputSys.keyEventSlot.connect(app.keyEventSignal);
         inputSys.mouseBtnEventSlot.connect(app.mouseBtnEventSignal);
 
@@ -143,9 +129,11 @@ class GameScene extends Scene {
         timerSys.update(dt);
         tweenerSys.update(dt);
         gravitySys.update(dt);
+        frictionSys.update(dt);
+        heroMoveSys.update(dt);
         moveSys.move(dt);
         collisionSys.update(dt);
-        moveSys.updateVels();
+        moveSys.updateVels(dt);
         scrollingBitmapSys.update(dt);
     }
 }

@@ -19,6 +19,7 @@ class ComStore {
     public var userInputConfigs(default, null) = new heat.ecs.ComMap<UserInputConfig>();
     public var velocities(default, null) = new heat.ecs.ComMap<com.Velocity>();
     public var tileGroups(default, null) = new heat.ecs.ComMap<h2d.TileGroup>();
+    public var heroStates(default, null) = new heat.ecs.ComMap<com.HeroState>();
 
     public function new() {}
 
