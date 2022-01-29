@@ -11,6 +11,7 @@ class GameScene extends Scene {
     var gravitySys:GravitySys;
     var inputSys:InputSys;
     var moveSys:MoveSys;
+    var scrollingBitmapSys:ScrollingBitmapSys;
 
     override public function new(app:App)
     {
@@ -24,6 +25,7 @@ class GameScene extends Scene {
         gravitySys = new GravitySys(coms);
         inputSys = new InputSys(coms.userInputConfigs);
         moveSys = new MoveSys(coms);
+        scrollingBitmapSys = new ScrollingBitmapSys(coms);
 
         //events
         separationSys.onCollisionSlot.connect(collisionSys.collisionSignal);
@@ -48,6 +50,17 @@ class GameScene extends Scene {
         ));
         inputSys.keyEventSlot.connect(app.keyEventSignal);
         inputSys.mouseBtnEventSlot.connect(app.mouseBtnEventSignal);
+
+        //build the background
+        new BackgroundBuilder(coms)
+            .setTile(hxd.Res.img.titleBackground_png.toTile())
+            .setParent(heapsScene)
+            .setSize(App.VIEW_WIDTH, App.VIEW_HEIGHT)
+            .autoScrollY(true, 2)
+            .autoFlipX(true, 0.4)
+            .autoFlipY(true, 0.2)
+            .randScrollX(true, 0.2)
+            .build();
 
         var id = coms.getIntId();
         var collidable = new col.Collidable(0, 0, App.VIEW_WIDTH, 50);
@@ -111,5 +124,6 @@ class GameScene extends Scene {
         moveSys.move(dt);
         collisionSys.update(dt);
         moveSys.updateVels();
+        scrollingBitmapSys.update(dt);
     }
 }

@@ -8,6 +8,7 @@ class ComStore {
 
     public var anims(default, null) = new heat.ecs.ComMap<h2d.Anim>();
     public var bitmaps(default, null) = new heat.ecs.ComMap<h2d.Bitmap>();
+    public var bitmapTweenCouplings(default, null) = new heat.ecs.ComMap<com.BitmapTweenCoupling>();
     public var collidables(default, null) = new heat.ecs.ComMap<col.Collidable>();
     public var heapsTexts(default, null) = new heat.ecs.ComMap<h2d.Text>();
     public var kindComs(default, null) = new heat.ecs.ComMap<com.Kind>();
