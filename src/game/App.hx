@@ -8,6 +8,7 @@ class App extends core.App {
     public static inline final VIEW_HEIGHT = 450;
 
     var sceneState:SceneState = TITLE;
+    public var assetService = new heaps.AssetService();
 
     override function onInit() {
         hxd.Window.getInstance().resize(VIEW_WIDTH, VIEW_HEIGHT);

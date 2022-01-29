@@ -1,6 +1,5 @@
 package heaps;
 
-import com.AnimDef;
 import com.SpriteKind;
 
 /**
