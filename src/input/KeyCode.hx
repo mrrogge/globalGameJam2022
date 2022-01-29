@@ -59,5 +59,6 @@ enum KeyCode {
     F12;
     ENTER;
     NUMPAD_ENTER;
+    SPACE;
     OTHER(code:Int);
 }

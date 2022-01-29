@@ -49,6 +49,7 @@ implements h3d.IDrawable
         hxd.Key.F10 => F10,
         hxd.Key.F11 => F11,
         hxd.Key.F12 => F12,
+        hxd.Key.SPACE => SPACE,
         hxd.Key.ENTER => ENTER,
         hxd.Key.NUMPAD_ENTER => NUMPAD_ENTER
     ];

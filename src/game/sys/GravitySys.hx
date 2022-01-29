@@ -10,10 +10,11 @@ class GravitySys {
     }
 
     public function update(dt:Float) {
+        var g = 100;
         for (id in query.iter()) {
             var mass = coms.mass[id];
             var velocity = coms.velocities[id];
-            velocity.y += mass * dt;    
+            velocity.y += mass * g * dt;    
         }
     }
 }

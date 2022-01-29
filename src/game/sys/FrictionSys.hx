@@ -10,7 +10,7 @@ class FrictionSys {
     }
 
     public function update(dt:Float) {
-        var mag = 900;
+        var mag = 1000;
         for (id in query.iter()) {
             var vel = coms.velocities[id];
             if (vel.x > 0) {

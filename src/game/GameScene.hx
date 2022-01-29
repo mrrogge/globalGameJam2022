@@ -33,7 +33,8 @@ class GameScene extends Scene {
 
         //events
         separationSys.onCollisionSlot.connect(collisionSys.collisionSignal);
-        heroMoveSys.actionSlot.connect(inputSys.actionSignal);
+        heroMoveSys.onActionSlot.connect(inputSys.actionSignal);
+        heroMoveSys.onCollisionSlot.connect(collisionSys.collisionSignal);
         inputSys.keyEventSlot.connect(app.keyEventSignal);
         inputSys.mouseBtnEventSlot.connect(app.mouseBtnEventSignal);
 
@@ -99,6 +100,7 @@ class GameScene extends Scene {
         var gameInputConfig = new UserInputConfig()
         .setKeysToBools([
             W => MOVE_HERO(UP),
+            SPACE => MOVE_HERO(UP),
             S => MOVE_HERO(DOWN),
             A => MOVE_HERO(LEFT),
             D => MOVE_HERO(RIGHT),
