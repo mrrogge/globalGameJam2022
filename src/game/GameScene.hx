@@ -16,6 +16,5 @@ class GameScene extends Scene {
         scene.heapsScene.addChildAt(bitmap, LayerKind.OBJECTS1);
         coms.posComs[id] = new heaps.ObjPosAdapter(bitmap);
         coms.kindComs[id] = Kind.BARRIER;
-
     }
 }

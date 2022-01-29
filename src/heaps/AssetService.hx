@@ -26,35 +26,6 @@ class AssetService {
         return hxd.Res.loader.load(path).toPrefab();
     }
 
-    /**
-        Used to resolve prototype chains of definition resources. A given resource can define a prototype path string, which will inherit any properties from that prototype rather than needing to duplicate the values. A resource can override any prototype properties in its own definition.
-    **/
-    function resolvePrototypes<T:com.BaseDef>(?def:T, ?result:T):T {
-        if (result == null) result = def;
-        if (def == null) return result;
-        if (def.meta != null && def.meta.prototype != null) {
-            var protoRes = getResFromString(def.meta.prototype);
-            var def:com.BaseDef = parseJsonRes(protoRes);
-            //Json merge is dynamic, resulting in what should be an equivalent structure with prototype's props, however this is not type-safe (prototype could be invalid).
-            result = cast MergeJson.merge(def, result);
-        }
-        else {
-            def = null;
-        }
-        return resolvePrototypes(def, result);
-    }
-
-    /**
-        Loads a definition resource of type T from the specified haxe resource res.
-
-        This resolves any prototype chains defined in the resource, resulting in a complete structure with all properties.
-    **/
-    function loadDef<T:com.BaseDef>(res:hxd.res.Resource):T {
-        var def:T = parseJsonRes(res);
-        def = resolvePrototypes(def);
-        return def;
-    }
-
     public function new() {
         
     }
@@ -106,24 +77,5 @@ class AssetService {
         if (!fontCache.exists(id)) fontCache[id] = new Map<Int, h2d.Font>();
         fontCache[id][size] = font;
         return font;
-    }
-
-    /**
-        Returns an array of tiles corresponding to an AnimDef.
-    **/
-    public function getAnimFrames(def:com.AnimDef):Array<h2d.Tile> {
-        var frames = new Array<h2d.Tile>();
-        var img = getImageFromString(def.image);
-        var imgTile = getImageTile(img);
-        var tileCountX = Math.floor(imgTile.width / def.frameWidth);
-        var tileCountY = Math.floor(imgTile.height / def.frameHeight);
-        for (row in 0...tileCountX) {
-            for (col in 0...tileCountY) {
-                frames.push(getTileFromSpriteKind(IMG(img, row*def.frameWidth,
-                    col*def.frameHeight, def.frameWidth, def.frameHeight,
-                    def.offsetX, def.offsetY)));
-            }
-        }
-        return frames;
     }
 }
