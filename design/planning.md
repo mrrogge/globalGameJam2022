@@ -1,8 +1,9 @@
 # Planning
 
-- [ ] Get objects populating in world via map file
+- [x] Get objects populating in world via map file
 - [ ] camera tracking hero
-- [ ] hero movement
+- [x] hero movement
+- [ ] hero jumping
 - [ ] hero firing
 - [ ] basic enemy movement
 - [ ] basic enemy firing
