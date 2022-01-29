@@ -58,7 +58,7 @@ class GameScene extends Scene {
         bitmap.setPosition(0, 400);
         coms.bitmaps[id] = bitmap;
         coms.objects[id] = bitmap;
-        heapsScene.addChildAt(bitmap, LayerKind.OBJECTS1);
+        heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
         coms.kindComs[id] = Kind.BARRIER;
 
         id = "hero";
@@ -70,7 +70,7 @@ class GameScene extends Scene {
         bitmap.setPosition(200, 0);
         coms.bitmaps[id] = bitmap;
         coms.objects[id] = bitmap;
-        heapsScene.addChildAt(bitmap, LayerKind.OBJECTS1);
+        heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
         coms.kindComs[id] = Kind.HERO;
         coms.mass[id] = 50;
         coms.velocities[id] = new Velocity(0,0,200,0);

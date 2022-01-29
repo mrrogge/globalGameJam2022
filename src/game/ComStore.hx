@@ -17,6 +17,7 @@ class ComStore {
     public var tweeners(default, null) = new heat.ecs.ComMap<com.Tweener>();
     public var userInputConfigs(default, null) = new heat.ecs.ComMap<UserInputConfig>();
     public var velocities(default, null) = new heat.ecs.ComMap<com.Velocity>();
+    public var tileGroups(default, null) = new heat.ecs.ComMap<h2d.TileGroup>();
 
     public function new() {}
 
