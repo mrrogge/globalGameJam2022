@@ -63,13 +63,16 @@ class GameScene extends Scene {
             .build();
 
         //build map layers
-        var mapLayerBuilder = new tiled.MapLayerBuilder(coms);
+        var mapLayerBuilder = new tiled.MapLayerBuilder(coms, app.assetService);
         mapLayerBuilder.setTileImage(hxd.Res.img.tileset_png.toTile())
             .loadText(hxd.Res.tiledMaps.level1_json.entry.getText());
         mapLayerBuilder.selectLayerByName("background")
             .setParent(heapsScene, LayerKind.BACK_OBJECTS)
             .build();
         mapLayerBuilder.selectLayerByName("main")
+            .setParent(heapsScene, LayerKind.MID_OBJECTS)
+            .build();
+        mapLayerBuilder.selectLayerByName("objects")
             .setParent(heapsScene, LayerKind.MID_OBJECTS)
             .build();
         mapLayerBuilder.selectLayerByName("foreground")
@@ -92,13 +95,13 @@ class GameScene extends Scene {
         // heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
         // coms.kindComs[id] = Kind.BARRIER;
 
-        //temp hero
-        // id = "hero";
-        // collidable = new col.Collidable(0, 0, 50, 50);
+        // temp hero
+        // var id = "hero";
+        // var collidable = new col.Collidable(0, 0, 50, 50);
         // collidable.movable = true;
         // coms.collidables[id] = collidable;
-        // tile = app.assetService.getTileFromSpriteKind(RECT(0, 0, Std.int(50), Std.int(50), 0xFFFFFF, 1));
-        // bitmap = new h2d.Bitmap(tile);
+        // var tile = app.assetService.getTileFromSpriteKind(RECT(0, 0, Std.int(50), Std.int(50), 0x0000FF, 1));
+        // var bitmap = new h2d.Bitmap(tile);
         // bitmap.setPosition(200, 0);
         // coms.bitmaps[id] = bitmap;
         // coms.objects[id] = bitmap;
