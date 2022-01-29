@@ -62,31 +62,50 @@ class GameScene extends Scene {
             .randScrollX(true, 0.2)
             .build();
 
-        var id = coms.getIntId();
-        var collidable = new col.Collidable(0, 0, App.VIEW_WIDTH, 50);
-        collidable.movable = false;
-        coms.collidables[id] = collidable;
-        var tile = app.assetService.getTileFromSpriteKind(RECT(0, 0, Std.int(App.VIEW_WIDTH), Std.int(50), 0xFFFFFF, 1));
-        var bitmap = new h2d.Bitmap(tile);
-        bitmap.setPosition(0, 400);
-        coms.bitmaps[id] = bitmap;
-        coms.objects[id] = bitmap;
-        heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
-        coms.kindComs[id] = Kind.BARRIER;
+        //build map layers
+        var mapLayerBuilder = new tiled.MapLayerBuilder(coms);
+        mapLayerBuilder.setTileImage(hxd.Res.img.tileset_png.toTile())
+            .loadText(hxd.Res.tiledMaps.level1_json.entry.getText());
+        mapLayerBuilder.selectLayerByName("background")
+            .setParent(heapsScene, LayerKind.BACK_OBJECTS)
+            .build();
+        mapLayerBuilder.selectLayerByName("main")
+            .setParent(heapsScene, LayerKind.MID_OBJECTS)
+            .build();
+        mapLayerBuilder.selectLayerByName("foreground")
+            .setParent(heapsScene, LayerKind.FRONT_OBJECTS)
+            .build();
 
-        id = "hero";
-        collidable = new col.Collidable(0, 0, 50, 50);
-        collidable.movable = true;
-        coms.collidables[id] = collidable;
-        tile = app.assetService.getTileFromSpriteKind(RECT(0, 0, Std.int(50), Std.int(50), 0xFFFFFF, 1));
-        bitmap = new h2d.Bitmap(tile);
-        bitmap.setPosition(200, 0);
-        coms.bitmaps[id] = bitmap;
-        coms.objects[id] = bitmap;
-        heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
-        coms.kindComs[id] = Kind.HERO;
-        coms.mass[id] = 50;
-        coms.velocities[id] = new Velocity(0,0,200,0);
+        //move camera
+        heapsScene.camera.setPosition(0, 0);
+
+        //temp ground
+        // var id = coms.getIntId();
+        // var collidable = new col.Collidable(0, 0, App.VIEW_WIDTH, 50);
+        // collidable.movable = false;
+        // coms.collidables[id] = collidable;
+        // var tile = app.assetService.getTileFromSpriteKind(RECT(0, 0, Std.int(App.VIEW_WIDTH), Std.int(50), 0xFFFFFF, 1));
+        // var bitmap = new h2d.Bitmap(tile);
+        // bitmap.setPosition(0, 400);
+        // coms.bitmaps[id] = bitmap;
+        // coms.objects[id] = bitmap;
+        // heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
+        // coms.kindComs[id] = Kind.BARRIER;
+
+        //temp hero
+        // id = "hero";
+        // collidable = new col.Collidable(0, 0, 50, 50);
+        // collidable.movable = true;
+        // coms.collidables[id] = collidable;
+        // tile = app.assetService.getTileFromSpriteKind(RECT(0, 0, Std.int(50), Std.int(50), 0xFFFFFF, 1));
+        // bitmap = new h2d.Bitmap(tile);
+        // bitmap.setPosition(200, 0);
+        // coms.bitmaps[id] = bitmap;
+        // coms.objects[id] = bitmap;
+        // heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
+        // coms.kindComs[id] = Kind.HERO;
+        // coms.mass[id] = 50;
+        // coms.velocities[id] = new Velocity(0,0,200,0);
 
         var gameInputConfig = new UserInputConfig()
         .setKeysToBools([
