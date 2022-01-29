@@ -1,0 +1,3 @@
+# @install: lix --silent download "haxelib:/mergejson#1.1.0" into mergejson/1.1.0/haxelib
+-cp ${HAXE_LIBCACHE}/mergejson/1.1.0/haxelib/mergejson
+-D mergejson=1.1.0

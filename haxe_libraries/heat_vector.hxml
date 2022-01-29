@@ -1,0 +1,3 @@
+-cp ${SCOPE_DIR}/./heat_vector/src
+-D heat_vector=0.1.1
+--macro Sys.println("haxe_libraries/heat_vector.hxml:2: [Warning] Using dev version of library heat_vector")

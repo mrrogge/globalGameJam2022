@@ -1,0 +1,7 @@
+--class-path src
+common.hxml
+-L hldx
+# -D windowFixed=1
+--debug
+--hl bin/main.hl
+--main Main
