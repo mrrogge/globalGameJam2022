@@ -97,8 +97,9 @@ class MapLayerBuilder {
                             coms.collidables[id] = collidable;
                         }
 
-                        case "hero": {
-                            var collidable = new col.Collidable(0, 0, 
+                        case "hero", "enemy1", "enemy2": {
+                            var collidable = new col.Collidable(
+                                mapObject.width/2, mapObject.height,
                                 mapObject.width, mapObject.height);
                             collidable.movable = true;
                             coms.collidables[id] = collidable;
@@ -121,8 +122,37 @@ class MapLayerBuilder {
 
                         case "hero": {
                             var tile = assetService.getTileFromSpriteKind(
-                                RECT(0, 0, Std.int(mapObject.width), 
-                                Std.int(mapObject.height), 0x0000FF, 1));
+                                IMG(hxd.Res.img.hero_png, 0, 0, 32, 32, 16, 32));
+                            var bitmap = new h2d.Bitmap(tile);
+                            bitmap.setPosition(mapObject.x, mapObject.y);
+                            coms.bitmaps[id] = bitmap;
+                            coms.objects[id] = bitmap;
+                            if (scene != null) {
+                                scene.addChildAt(bitmap, parentLayer);
+                            }
+                            else {
+                                parent.addChild(bitmap);
+                            }
+                        }
+
+                        case "enemy1": {
+                            var tile = assetService.getTileFromSpriteKind(
+                                IMG(hxd.Res.img.enemy1_png, 0, 0, 32, 32, 16, 32));
+                            var bitmap = new h2d.Bitmap(tile);
+                            bitmap.setPosition(mapObject.x, mapObject.y);
+                            coms.bitmaps[id] = bitmap;
+                            coms.objects[id] = bitmap;
+                            if (scene != null) {
+                                scene.addChildAt(bitmap, parentLayer);
+                            }
+                            else {
+                                parent.addChild(bitmap);
+                            }
+                        }
+
+                        case "enemy2": {
+                            var tile = assetService.getTileFromSpriteKind(
+                                IMG(hxd.Res.img.enemy2_png, 0, 0, 32, 32, 16, 32));
                             var bitmap = new h2d.Bitmap(tile);
                             bitmap.setPosition(mapObject.x, mapObject.y);
                             coms.bitmaps[id] = bitmap;
@@ -147,6 +177,13 @@ class MapLayerBuilder {
                             coms.velocities[id] = new com.Velocity(0, 0, 
                                 mapObject.x, mapObject.y, 150, 300);
                             coms.heroStates[id] = new com.HeroState();
+                        }
+
+                        case "enemy1", "enemy2": {
+                            coms.kindComs[id] = com.Kind.ENEMY;
+                            coms.mass[id] = 20;
+                            coms.velocities[id] = new com.Velocity(0, 0,
+                                mapObject.x, mapObject.y, 150, 300);
                         }
                     }
                 }

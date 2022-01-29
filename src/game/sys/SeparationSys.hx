@@ -19,10 +19,14 @@ class SeparationSys {
                 case BARRIER: true;
                 case HERO, ENEMY, BULLET(_), PICKUP(_): false;
             }
-            case ENEMY, BULLET(_), PICKUP(_): false;
+            case ENEMY: switch kind2 {
+                case BARRIER: true;
+                case HERO, ENEMY, BULLET(_), PICKUP(_): false;
+            }
+            case BULLET(_), PICKUP(_): false;
             case BARRIER: switch kind2 {
-                case HERO: true;
-                case ENEMY, BULLET(_), PICKUP(_), BARRIER: false;
+                case HERO, ENEMY: true;
+                case BULLET(_), PICKUP(_), BARRIER: false;
             }
         }
     }

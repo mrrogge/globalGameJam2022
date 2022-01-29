@@ -31,6 +31,9 @@ class GameScene extends Scene {
         heroMoveSys = new HeroMoveSys(coms);
         frictionSys = new FrictionSys(coms);
 
+        //set the collision system filter
+        collisionSys.filter = colFilter;
+
         //events
         separationSys.onCollisionSlot.connect(collisionSys.collisionSignal);
         heroMoveSys.onActionSlot.connect(inputSys.actionSignal);
@@ -68,34 +71,6 @@ class GameScene extends Scene {
 
         //move camera
         heapsScene.camera.setPosition(0, 0);
-
-        //temp ground
-        // var id = coms.getIntId();
-        // var collidable = new col.Collidable(0, 0, App.VIEW_WIDTH, 50);
-        // collidable.movable = false;
-        // coms.collidables[id] = collidable;
-        // var tile = app.assetService.getTileFromSpriteKind(RECT(0, 0, Std.int(App.VIEW_WIDTH), Std.int(50), 0xFFFFFF, 1));
-        // var bitmap = new h2d.Bitmap(tile);
-        // bitmap.setPosition(0, 400);
-        // coms.bitmaps[id] = bitmap;
-        // coms.objects[id] = bitmap;
-        // heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
-        // coms.kindComs[id] = Kind.BARRIER;
-
-        // temp hero
-        // var id = "hero";
-        // var collidable = new col.Collidable(0, 0, 50, 50);
-        // collidable.movable = true;
-        // coms.collidables[id] = collidable;
-        // var tile = app.assetService.getTileFromSpriteKind(RECT(0, 0, Std.int(50), Std.int(50), 0x0000FF, 1));
-        // var bitmap = new h2d.Bitmap(tile);
-        // bitmap.setPosition(200, 0);
-        // coms.bitmaps[id] = bitmap;
-        // coms.objects[id] = bitmap;
-        // heapsScene.addChildAt(bitmap, LayerKind.MID_OBJECTS);
-        // coms.kindComs[id] = Kind.HERO;
-        // coms.mass[id] = 50;
-        // coms.velocities[id] = new Velocity(0,0,200,0);
 
         var gameInputConfig = new UserInputConfig()
         .setKeysToBools([
@@ -137,5 +112,50 @@ class GameScene extends Scene {
         collisionSys.update(dt);
         moveSys.updateVels(dt);
         scrollingBitmapSys.update(dt);
+    }
+
+    function colFilter(id1:heat.ecs.EntityId, id2:heat.ecs.EntityId):Bool {
+        var kind = coms.kindComs[id1];
+        if (kind == null) return false;
+        var otherKind = coms.kindComs[id2];
+        if (otherKind == null) return false;
+        return switch kind {
+            case HERO: {
+                switch otherKind {
+                    case ENEMY, BULLET(ENEMY), PICKUP(_), BARRIER: true;
+                    case HERO, BULLET(HERO): false;
+                }
+            }
+            case ENEMY: {
+                switch otherKind {
+                    case HERO, ENEMY, BULLET(HERO), BARRIER: true;
+                    case BULLET(ENEMY), PICKUP(_): false;
+                }
+            }
+            case BULLET(HERO): {
+                switch otherKind {
+                    case ENEMY, BULLET(ENEMY), BARRIER: true;
+                    case HERO, BULLET(HERO), PICKUP(_): false;
+                }
+            }
+            case BULLET(ENEMY): {
+                switch otherKind {
+                    case HERO, BULLET(HERO), BARRIER: true;
+                    case ENEMY, BULLET(ENEMY), PICKUP(_): false;
+                }
+            }
+            case PICKUP(_): {
+                switch otherKind {
+                    case HERO: true;
+                    case ENEMY, BULLET(_), PICKUP(_), BARRIER: false;
+                }
+            }
+            case BARRIER: {
+                switch otherKind {
+                    case HERO, ENEMY, BULLET(_): true;
+                    case PICKUP(_), BARRIER: false;
+                }
+            }
+        }
     }
 }
