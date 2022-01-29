@@ -31,7 +31,6 @@ class Tweener extends Timer {
     }
 
     override function doneHandler() {
-        trace("tween");
         updateTweenedVal();
         super.doneHandler();
     }
