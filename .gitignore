@@ -1,0 +1,7 @@
+.haxelib
+.vscode/
+bin/
+
+# dev versions of libraries
+heat_vector/
+hide/
