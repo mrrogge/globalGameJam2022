@@ -95,7 +95,13 @@ class BackgroundBuilder {
         if (parent == null) throw new haxe.Exception("parent must be set");
         tile.setSize(width + tileWidth*2, height + tileHeight*2);
         var bg = new h2d.Bitmap(tile);
-        parent.addChildAt(bg, layer == null ? 0 : layer);
+        var scene = Std.downcast(parent, h2d.Scene);
+        if (scene != null) {
+            scene.addChildAt(bg, layer == null ? 0 : layer);
+        }
+        else {
+            parent.addChild(bg);
+        }
         bg.setPosition(-tileWidth, -tileHeight);
         bg.tileWrap = true;
         bg.alpha = alpha;
