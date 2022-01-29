@@ -10,10 +10,13 @@ class ComStore {
     public var bitmaps(default, null) = new heat.ecs.ComMap<h2d.Bitmap>();
     public var collidables(default, null) = new heat.ecs.ComMap<col.Collidable>();
     public var heapsTexts(default, null) = new heat.ecs.ComMap<h2d.Text>();
+    public var kindComs(default, null) = new heat.ecs.ComMap<com.Kind>();
+    public var mass(default, null) = new heat.ecs.ComMap<Float>();
     public var objects(default, null) = new heat.ecs.ComMap<h2d.Object>();
     public var timers(default, null) = new heat.ecs.ComMap<com.Timer>();
     public var tweeners(default, null) = new heat.ecs.ComMap<com.Tweener>();
     public var userInputConfigs(default, null) = new heat.ecs.ComMap<UserInputConfig>();
+    public var velocities(default, null) = new heat.ecs.ComMap<com.Velocity>();
 
     public function new() {}
 

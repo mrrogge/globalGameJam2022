@@ -7,4 +7,5 @@ enum ActionOnceKind {
     OK;
     PAUSE_TOGGLE;
     MOVE_UI(dir:dir.Dir4);
+    RESET;
 }
