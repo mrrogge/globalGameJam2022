@@ -113,6 +113,9 @@ class GameScene extends game.Scene {
         ]);
         pauseInputConfig.enabled = false;
         coms.userInputConfigs["pauseInputs"] = pauseInputConfig;
+
+        //music
+        hxd.Res.music.theme_mp3.play();
     }
 
     override function update(dt:Float) {
