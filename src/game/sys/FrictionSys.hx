@@ -11,7 +11,8 @@ class FrictionSys {
 
     public function update(dt:Float) {
         var mag = 1000;
-        for (id in query.iter()) {
+        query.run();
+        for (id in query.result) {
             var vel = coms.velocities[id];
             if (vel.x > 0) {
                 vel.x -= Math.min(vel.x, mag*dt);

@@ -10,7 +10,8 @@ class TimerSys {
     }
 
     public function update(dt:Float) {
-        for (id in query.iter()) {
+        query.run();
+        for (id in query.result) {
             timers[id].update(dt);
         }
     }

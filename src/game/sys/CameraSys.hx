@@ -55,7 +55,8 @@ class CameraSys {
     }
 
     public function followHero() {
-        for (id in heroQuery.iter()) {
+        heroQuery.run();
+        for (id in heroQuery.result) {
             var config = coms.camConfigs["worldCamera"];
             if (config == null) return;
             var targetPos = coms.objects[id];

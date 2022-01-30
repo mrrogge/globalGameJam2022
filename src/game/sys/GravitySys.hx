@@ -11,7 +11,8 @@ class GravitySys {
 
     public function update(dt:Float) {
         var g = 2;
-        for (id in query.iter()) {
+        query.run();
+        for (id in query.result) {
             var mass = coms.mass[id];
             var velocity = coms.velocities[id];
             var object = coms.objects[id];

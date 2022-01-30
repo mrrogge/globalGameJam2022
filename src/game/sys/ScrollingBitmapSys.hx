@@ -10,7 +10,8 @@ class ScrollingBitmapSys {
     }
 
     public function update(dt:Float) {
-        for (id in query.iter()) {
+        query.run();
+        for (id in query.result) {
             var coupling = coms.bitmapTweenCouplings[id];
             var bitmap = coms.bitmaps[coupling.bitmapId];
             if (bitmap == null) continue;

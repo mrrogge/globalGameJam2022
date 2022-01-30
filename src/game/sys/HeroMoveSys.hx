@@ -20,7 +20,8 @@ class HeroMoveSys {
     }
 
     public function update(dt:Float) {
-        for (id in query.iter()) {
+        query.run();
+        for (id in query.result) {
             var object = coms.objects[id];
             var state = coms.heroStates[id];
             var vel = coms.velocities[id];

@@ -21,7 +21,8 @@ class EnemyMoveSys {
 
     public function update(dt:Float) {
         var speed = 24.;
-        for (id in query.iter()) {
+        query.run();
+        for (id in query.result) {
             var state = coms.enemyStates[id];
             var vel = coms.velocities[id];
             var object = coms.objects[id];

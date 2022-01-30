@@ -168,5 +168,7 @@ implements h3d.IDrawable
             }
         }
         super.update(dt);
+
+        // trace(engine.drawCalls, 1/dt);
     }
 }

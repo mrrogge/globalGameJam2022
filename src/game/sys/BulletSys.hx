@@ -23,7 +23,8 @@ class BulletSys {
     }
 
     public function update(dt:Float) {
-        for (id in query.iter()) {
+        query.run();
+        for (id in query.result) {
             var object = coms.objects[id];
             var bulletData = coms.bulletDataComs[id];
 

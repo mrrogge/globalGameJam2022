@@ -15,7 +15,8 @@ class MoveSys {
 
     //Moves everything based on velocities
     public function move(dt:Float) {
-        for (id in query.iter()) {
+        query.run();
+        for (id in query.result) {
             var object = coms.objects[id];
             var vel = coms.velocities[id];
             if (object.x - vel.prevPos.x > vel.xMax*dt) {
