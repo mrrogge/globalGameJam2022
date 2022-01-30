@@ -190,6 +190,7 @@ class MapLayerBuilder {
                             coms.velocities[id] = new com.Velocity(0, 0, 
                                 mapObject.x, mapObject.y, 150, 750);
                             coms.heroStates[id] = new com.HeroState();
+                            coms.healthComs[id] = new com.Health(5);
                         }
 
                         case "enemy1", "enemy2": {

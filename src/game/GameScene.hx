@@ -53,6 +53,7 @@ class GameScene extends Scene {
         enemyMoveSys.onKilledSlot.connect(healthSys.killedSignal);
         enemyMoveSys.onEnergizedSlot.connect(bulletSys.energizeSignal);
         bulletSys.onSpawnBulletSlot.connect(enemyMoveSys.spawnBulletSignal);
+        heroMoveSys.onKilledSlot.connect(healthSys.killedSignal);
 
         //build the background
         new BackgroundBuilder(coms)

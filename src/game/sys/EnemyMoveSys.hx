@@ -88,6 +88,8 @@ class EnemyMoveSys {
     }
 
     function onKilled(arg:EKilled) {
+        var state = coms.enemyStates[arg.targetId];
+        if (state == null) return;
         disposedEnemyIds.add(arg.targetId);
     }
 
@@ -95,7 +97,7 @@ class EnemyMoveSys {
     energy:EnergyKind) 
     {
         spawnBulletEmitter.emit(new ESpawnBullet()
-            .setPos(x, y-16)
+            .setPos(x, y-6)
             .setVel(Math.cos(angle)*speed, Math.sin(angle)*speed)
             .setKind(com.Kind.BulletKind.ENEMY, energy)
         );

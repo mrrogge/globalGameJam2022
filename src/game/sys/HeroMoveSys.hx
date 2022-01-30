@@ -7,6 +7,7 @@ class HeroMoveSys {
     public var onCollisionSlot(default, null):heat.event.Slot<col.ECollision>;
     public var bulletSignal(default, null):heat.event.ISignal<ESpawnBullet>;
     var bulletSignalEmitter = new heat.event.SignalEmitter<ESpawnBullet>();
+    public var onKilledSlot(default, null):heat.event.Slot<EKilled>;
 
     public function new(coms:ComStore) {
         this.coms = coms;
@@ -15,6 +16,7 @@ class HeroMoveSys {
         onActionSlot = new heat.event.Slot(onAction);
         onCollisionSlot = new heat.event.Slot(onCollision);
         bulletSignal = bulletSignalEmitter.signal;
+        onKilledSlot = new heat.event.Slot(onKilled);
     }
 
     public function update(dt:Float) {
@@ -194,5 +196,12 @@ class HeroMoveSys {
                 default: heroState.jumpState;
             }
         }
+    }
+
+    function onKilled(arg:EKilled) {
+        var heroState = coms.heroStates[arg.targetId];
+        if (heroState == null) return;
+        //TODO proper game over handling
+        trace("YOU DIED");
     }
 }
