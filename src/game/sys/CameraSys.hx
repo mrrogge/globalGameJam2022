@@ -50,8 +50,8 @@ class CameraSys {
         }
 
         // temp hardcoded limits within scene area
-        cam.x = Math.max(App.VIEW_WIDTH/2, Math.min(32*35-App.VIEW_WIDTH/2, cam.x));
-        cam.y = Math.max(App.VIEW_HEIGHT/2, Math.min(32*21-App.VIEW_HEIGHT/2, cam.y));
+        cam.x = Math.max(App.VIEW_WIDTH/2, Math.min(App.LEVEL_WIDTH-App.VIEW_WIDTH/2, cam.x));
+        cam.y = Math.max(App.VIEW_HEIGHT/2, Math.min(App.LEVEL_HEIGHT-App.VIEW_HEIGHT/2, cam.y));
     }
 
     public function followHero() {

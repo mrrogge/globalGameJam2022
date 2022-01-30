@@ -1,9 +1,8 @@
 package game;
 
 class App extends core.App {
-    public static inline final LEVEL_WIDTH = 32*35;
-    public static inline final LEVEL_HEIGHT = 32*21;
-    public static inline final WALL_DEPTH = 32;
+    public static inline final LEVEL_WIDTH = 16*96;
+    public static inline final LEVEL_HEIGHT = 16*32;
     public static inline final VIEW_WIDTH = 960;
     public static inline final VIEW_HEIGHT = 450;
 
