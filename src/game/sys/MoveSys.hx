@@ -18,8 +18,20 @@ class MoveSys {
         for (id in query.iter()) {
             var object = coms.objects[id];
             var vel = coms.velocities[id];
-            object.x += Math.min(Math.max(vel.x, -vel.xMax), vel.xMax) * dt;
-            object.y += Math.min(Math.max(vel.y, -vel.yMax), vel.yMax) * dt;
+            if (object.x - vel.prevPos.x > vel.xMax*dt) {
+                object.x = vel.xMax*dt + vel.prevPos.x;
+            }
+            else if (object.x - vel.prevPos.x < -vel.xMax*dt) {
+                object.x = vel.prevPos.x - vel.xMax*dt;
+            }
+            if (object.y - vel.prevPos.y > vel.yMax*dt) {
+                object.y = vel.yMax*dt + vel.prevPos.y;
+            }
+            else if (object.y - vel.prevPos.y < -vel.yMax*dt) {
+                object.y = vel.prevPos.y - vel.yMax*dt;
+            }
+            // object.x += Math.min(Math.max(vel.x, -vel.xMax), vel.xMax) * dt;
+            // object.y += Math.min(Math.max(vel.y, -vel.yMax), vel.yMax) * dt;
         }
     }
 

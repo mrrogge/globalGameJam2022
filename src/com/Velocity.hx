@@ -7,7 +7,7 @@ class Velocity {
     public var xMax:Float;
     public var yMax:Float;
 
-    public function new(x=0., y=0., prevPosX=0., prevPosY=0., xMax=200, yMax=200) {
+    public function new(x=0., y=0., prevPosX=0., prevPosY=0., xMax=1000, yMax=1000) {
         this.x = x;
         this.y = y;
         prevPos = {x:prevPosX, y:prevPosY};

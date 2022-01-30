@@ -36,7 +36,6 @@ class HeroMoveSys {
                     }
                 }
                 case ACCEL_LEFT: {
-                    trace(object.x, state.moveAccTween.current * dt);
                     state.moveAccTween.update(dt);
                     object.x -= state.moveAccTween.current * dt;
                     if (!moveLeftCmd) {
@@ -48,7 +47,6 @@ class HeroMoveSys {
                     }
                 }
                 case CONST_LEFT: {
-                    trace(object.x, state.moveAccTween.current * dt);
                     object.x -= state.moveAccTween.current * dt;
                     if (!moveLeftCmd) {
                         state.movingState = DECEL_LEFT;
@@ -90,16 +88,10 @@ class HeroMoveSys {
                     }
                 }
                 case RISE_ACC: {
-                    trace(state.jumpVel, state.jumpAccTween.delta);
                     state.jumpAccTween.update(dt);
                     state.jumpVel += state.jumpAccTween.delta;
                     object.y -= state.jumpVel * dt;
-                    if (!state.jumpCmd) {
-                        state.jumpState = FLOAT;
-                        state.jumpDecTween.reset();
-                        state.jumpVel = 0;
-                    }
-                    else if (state.jumpAccTween.justFinished) {
+                    if (!state.jumpCmd || state.jumpAccTween.justFinished) {
                         state.jumpState = RISE_DEC;
                         state.jumpDecTween.reset();
                         state.jumpVel = state.jumpAccTween.current;
@@ -107,11 +99,11 @@ class HeroMoveSys {
                     }
                 }
                 case RISE_DEC: {
-                    trace(state.jumpVel, state.jumpAccTween.delta);
                     state.jumpDecTween.update(dt);
+                    trace(state.jumpVel, state.jumpDecTween.delta);
                     state.jumpVel -= state.jumpDecTween.delta;
                     object.y -= state.jumpVel * dt;
-                    if (state.jumpDecTween.justFinished || state.jumpVel >= 0) {
+                    if (state.jumpDecTween.justFinished || state.jumpVel <= 0) {
                         state.jumpState = FLOAT;
                         state.jumpVel = 0;
                     }
