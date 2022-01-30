@@ -15,6 +15,7 @@ class GameScene extends Scene {
     var heroMoveSys:HeroMoveSys;
     var frictionSys:FrictionSys;
     var enemyMoveSys:EnemyMoveSys;
+    var bulletSys:BulletSys;
 
     override public function new(app:App)
     {
@@ -32,6 +33,7 @@ class GameScene extends Scene {
         heroMoveSys = new HeroMoveSys(coms);
         frictionSys = new FrictionSys(coms);
         enemyMoveSys = new EnemyMoveSys(coms);
+        bulletSys = new BulletSys(coms, heapsScene);
 
         //set the collision system filter
         collisionSys.filter = colFilter;
@@ -43,6 +45,7 @@ class GameScene extends Scene {
         inputSys.keyEventSlot.connect(app.keyEventSignal);
         inputSys.mouseBtnEventSlot.connect(app.mouseBtnEventSignal);
         enemyMoveSys.onCollisionSlot.connect(collisionSys.collisionSignal);
+        bulletSys.onCollisionSlot.connect(collisionSys.collisionSignal);
 
         //build the background
         new BackgroundBuilder(coms)
@@ -82,10 +85,8 @@ class GameScene extends Scene {
             S => MOVE_HERO(DOWN),
             A => MOVE_HERO(LEFT),
             D => MOVE_HERO(RIGHT),
-            UP => HERO_SHOOT(UP),
-            DOWN => HERO_SHOOT(DOWN),
-            LEFT => HERO_SHOOT(LEFT),
-            RIGHT => HERO_SHOOT(RIGHT)
+            J => HERO_SHOOT(LIGHT),
+            K => HERO_SHOOT(DARK)
         ])
         .setKeysToOnceActions([
             ESC => PAUSE_TOGGLE,
@@ -116,6 +117,7 @@ class GameScene extends Scene {
         collisionSys.update(dt);
         moveSys.updateVels(dt);
         scrollingBitmapSys.update(dt);
+        bulletSys.disposeBullets();
     }
 
     function colFilter(id1:heat.ecs.EntityId, id2:heat.ecs.EntityId):Bool {

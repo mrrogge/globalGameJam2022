@@ -5,5 +5,5 @@ package game;
 **/
 enum ActionBoolKind {
     MOVE_HERO(dir:dir.Dir4);
-    HERO_SHOOT(dir:dir.Dir4);
+    HERO_SHOOT(energy:com.EnergyKind);
 }

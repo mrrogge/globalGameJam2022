@@ -21,6 +21,8 @@ class ComStore {
     public var tileGroups(default, null) = new heat.ecs.ComMap<h2d.TileGroup>();
     public var heroStates(default, null) = new heat.ecs.ComMap<com.HeroState>();
     public var enemyStates(default, null) = new heat.ecs.ComMap<com.EnemyState>();
+    public var bulletDataComs(default, null) = new heat.ecs.ComMap<com.BulletData>();
+    public var energyKinds(default, null) = new heat.ecs.ComMap<com.EnergyKind>();
 
     public function new() {}
 

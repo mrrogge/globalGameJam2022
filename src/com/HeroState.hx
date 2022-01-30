@@ -17,10 +17,12 @@ class HeroState {
     public function new() {
         var maxSpeed = 300;
         moveAccTween = new Tweener(0.2);
+        moveAccTween.start = 0;
         moveAccTween.diff = maxSpeed;
         moveAccTween.easing = motion.easing.Quad.easeOut;
         moveAccTween.mode = ONCE;
         moveDecTween = new Tweener(0.2);
+        moveDecTween.start = 0;
         moveDecTween.diff = maxSpeed;
         moveDecTween.easing = motion.easing.Quad.easeIn;
         moveDecTween.mode = ONCE;
