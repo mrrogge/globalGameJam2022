@@ -2,11 +2,11 @@ package com;
 
 class Tweener extends Timer {
     public var easing:motion.easing.IEasing;
-    public var current(default, null):Float;
+    public var current(default, null):Null<Float>;
     var prev:Null<Float> = null;
-    public var delta(default, null):Float;
-    public var start:Float;
-    public var diff:Float;
+    public var delta(default, null):Null<Float>;
+    public var start:Null<Float>;
+    public var diff:Null<Float>;
 
     override public function new(period:Float) {
         super(period);
