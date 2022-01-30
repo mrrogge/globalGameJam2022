@@ -46,6 +46,7 @@ class GameScene extends Scene {
         inputSys.mouseBtnEventSlot.connect(app.mouseBtnEventSignal);
         enemyMoveSys.onCollisionSlot.connect(collisionSys.collisionSignal);
         bulletSys.onCollisionSlot.connect(collisionSys.collisionSignal);
+        bulletSys.onSpawnBulletSlot.connect(heroMoveSys.bulletSignal);
 
         //build the background
         new BackgroundBuilder(coms)
@@ -113,6 +114,7 @@ class GameScene extends Scene {
         frictionSys.update(dt);
         heroMoveSys.update(dt);
         enemyMoveSys.update(dt);
+        bulletSys.update(dt);
         moveSys.move(dt);
         collisionSys.update(dt);
         moveSys.updateVels(dt);

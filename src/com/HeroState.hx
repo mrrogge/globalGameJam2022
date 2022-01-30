@@ -12,6 +12,7 @@ class HeroState {
     public var jumpAccTween(default, null):Tweener;
     public var jumpDecTween(default, null):Tweener;
     public var jumpVel = 0.;
+    public var faceDir:dir.Dir4 = RIGHT;
 
 
     public function new() {

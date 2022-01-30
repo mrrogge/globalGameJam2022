@@ -65,10 +65,11 @@ class BulletSys {
             }
         }
         for (tile in tiles) {
-            tile.dx = 8;
-            tile.dy = 8;
+            tile.dx = -8;
+            tile.dy = -8;
         }
         var anim = new h2d.Anim(tiles, 8);
+        anim.setPosition(arg.x, arg.y);
         scene.addChildAt(anim, LayerKind.MID_OBJECTS);
         coms.anims[id] = anim;
         coms.objects[id] = anim;

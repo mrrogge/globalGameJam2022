@@ -5,6 +5,8 @@ class HeroMoveSys {
     var query = new heat.ecs.ComQuery();
     public var onActionSlot(default, null):heat.event.Slot<EAction>;
     public var onCollisionSlot(default, null):heat.event.Slot<col.ECollision>;
+    public var bulletSignal(default, null):heat.event.ISignal<ESpawnBullet>;
+    var bulletSignalEmitter = new heat.event.SignalEmitter<ESpawnBullet>();
 
     public function new(coms:ComStore) {
         this.coms = coms;
@@ -12,6 +14,7 @@ class HeroMoveSys {
             .with(coms.objects);
         onActionSlot = new heat.event.Slot(onAction);
         onCollisionSlot = new heat.event.Slot(onCollision);
+        bulletSignal = bulletSignalEmitter.signal;
     }
 
     public function update(dt:Float) {
@@ -23,6 +26,9 @@ class HeroMoveSys {
             var moveLeftCmd = state.moveLeftCmd && !state.moveRightCmd;
             var moveRightCmd = !state.moveLeftCmd && state.moveRightCmd;
             var idleCmd = !moveLeftCmd && !moveRightCmd;
+
+            if (moveLeftCmd) state.faceDir = LEFT;
+            else if (moveRightCmd) state.faceDir = RIGHT;
 
             switch state.movingState {
                 case IDLE: {
@@ -129,6 +135,26 @@ class HeroMoveSys {
                         case UP: state.jumpCmd = boolState;
                         case DOWN: {}
                     }
+                }
+            }
+            case BOOL(HERO_SHOOT(energy), boolState): {
+                if (!boolState) return;
+                for (id in query.iter()) {
+                    var state = coms.heroStates[id];
+                    var object = coms.objects[id];
+                    var event = new ESpawnBullet();
+                    event.setPos(object.x, object.y-16);
+                    switch state.faceDir {
+                        case LEFT: {
+                            event.setVel(-500, 0);
+                        }
+                        case RIGHT: {
+                            event.setVel(500, 0);
+                        }
+                        case UP, DOWN: {}
+                    }
+                    event.setKind(HERO, energy);
+                    bulletSignalEmitter.emit(event); 
                 }
             }
             default: {}
