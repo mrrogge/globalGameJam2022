@@ -38,7 +38,7 @@ class EnemyMoveSys {
                 enemyId = arg.id1;
                 normalX = arg.normal1.x;
             }
-            case BARRIER: barrierId = arg.id1;
+            case BARRIER, ENEMY_BARRIER: barrierId = arg.id1;
             default: {}
         }
         switch kind2 {
@@ -46,7 +46,7 @@ class EnemyMoveSys {
                 enemyId = arg.id2;
                 normalX = arg.normal2.x;
             }
-            case BARRIER: barrierId = arg.id2;
+            case BARRIER, ENEMY_BARRIER: barrierId = arg.id2;
             default: {}
         }
         if (enemyId == null || barrierId == null) return;

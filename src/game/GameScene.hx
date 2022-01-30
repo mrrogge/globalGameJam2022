@@ -127,37 +127,43 @@ class GameScene extends Scene {
             case HERO: {
                 switch otherKind {
                     case ENEMY, BULLET(ENEMY), PICKUP(_), BARRIER: true;
-                    case HERO, BULLET(HERO): false;
+                    case HERO, BULLET(HERO), ENEMY_BARRIER: false;
                 }
             }
             case ENEMY: {
                 switch otherKind {
-                    case HERO, ENEMY, BULLET(HERO), BARRIER: true;
+                    case HERO, ENEMY, BULLET(HERO), BARRIER, ENEMY_BARRIER: true;
                     case BULLET(ENEMY), PICKUP(_): false;
                 }
             }
             case BULLET(HERO): {
                 switch otherKind {
                     case ENEMY, BULLET(ENEMY), BARRIER: true;
-                    case HERO, BULLET(HERO), PICKUP(_): false;
+                    case HERO, BULLET(HERO), PICKUP(_), ENEMY_BARRIER: false;
                 }
             }
             case BULLET(ENEMY): {
                 switch otherKind {
                     case HERO, BULLET(HERO), BARRIER: true;
-                    case ENEMY, BULLET(ENEMY), PICKUP(_): false;
+                    case ENEMY, BULLET(ENEMY), PICKUP(_), ENEMY_BARRIER: false;
                 }
             }
             case PICKUP(_): {
                 switch otherKind {
                     case HERO: true;
-                    case ENEMY, BULLET(_), PICKUP(_), BARRIER: false;
+                    case ENEMY, BULLET(_), PICKUP(_), BARRIER, ENEMY_BARRIER: false;
                 }
             }
             case BARRIER: {
                 switch otherKind {
                     case HERO, ENEMY, BULLET(_): true;
-                    case PICKUP(_), BARRIER: false;
+                    case PICKUP(_), BARRIER, ENEMY_BARRIER: false;
+                }
+            }
+            case ENEMY_BARRIER: {
+                switch otherKind {
+                    case ENEMY: true;
+                    case HERO, BULLET(_), PICKUP(_), BARRIER, ENEMY_BARRIER: false;
                 }
             }
         }

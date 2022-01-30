@@ -48,8 +48,8 @@
   <object id="5" type="barrier" x="176" y="352" width="128" height="16"/>
   <object id="6" type="barrier" x="512" y="352" width="96" height="16"/>
   <object id="7" type="enemy2" x="436" y="356" width="23" height="28"/>
-  <object id="8" type="barrier" x="320" y="368" width="16" height="16"/>
-  <object id="9" type="barrier" x="496" y="368" width="16" height="16"/>
+  <object id="8" type="enemyBarrier" x="320" y="368" width="16" height="16"/>
+  <object id="9" type="enemyBarrier" x="496" y="368" width="16" height="16"/>
  </objectgroup>
  <layer id="5" name="main" width="96" height="32">
   <data encoding="csv">

@@ -90,7 +90,7 @@ class MapLayerBuilder {
 
                     //collidable
                     switch mapObject.type {
-                        case "barrier": {
+                        case "barrier", "enemyBarrier": {
                             var collidable = new col.Collidable(0, 0, 
                                 mapObject.width, mapObject.height);
                             collidable.movable = false;
@@ -108,7 +108,7 @@ class MapLayerBuilder {
 
                     //heaps objects
                     switch mapObject.type {
-                        case "barrier": {
+                        case "barrier", "enemyBarrier": {
                             var object = new h2d.Object();
                             object.setPosition(mapObject.x, mapObject.y);
                             coms.objects[id] = object;
@@ -170,6 +170,9 @@ class MapLayerBuilder {
                     switch mapObject.type {
                         case "barrier": {
                             coms.kindComs[id] = com.Kind.BARRIER;
+                        }
+                        case "enemyBarrier": {
+                            coms.kindComs[id] = com.Kind.ENEMY_BARRIER;
                         }
                         case "hero": {
                             coms.kindComs[id] = com.Kind.HERO;

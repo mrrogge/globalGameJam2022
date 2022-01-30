@@ -17,16 +17,20 @@ class SeparationSys {
         return switch kind1 {
             case HERO: switch kind2 {
                 case BARRIER: true;
-                case HERO, ENEMY, BULLET(_), PICKUP(_): false;
+                case HERO, ENEMY, BULLET(_), PICKUP(_), ENEMY_BARRIER: false;
             }
             case ENEMY: switch kind2 {
-                case BARRIER: true;
+                case BARRIER, ENEMY_BARRIER: true;
                 case HERO, ENEMY, BULLET(_), PICKUP(_): false;
             }
             case BULLET(_), PICKUP(_): false;
             case BARRIER: switch kind2 {
                 case HERO, ENEMY: true;
-                case BULLET(_), PICKUP(_), BARRIER: false;
+                case BULLET(_), PICKUP(_), BARRIER, ENEMY_BARRIER: false;
+            }
+            case ENEMY_BARRIER: switch kind2 {
+                case ENEMY: true;
+                case HERO, BULLET(_), PICKUP(_), BARRIER, ENEMY_BARRIER: false;
             }
         }
     }

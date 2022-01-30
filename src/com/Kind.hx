@@ -9,6 +9,7 @@ enum Kind {
     BULLET(kind:BulletKind);
     PICKUP(kind:PickupKind);
     BARRIER;
+    ENEMY_BARRIER;
 }
 
 enum BulletKind {
