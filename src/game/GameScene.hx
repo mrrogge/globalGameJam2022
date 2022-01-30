@@ -32,7 +32,7 @@ class GameScene extends game.Scene {
         inputSys = new InputSys(coms.userInputConfigs);
         moveSys = new MoveSys(coms);
         scrollingBitmapSys = new ScrollingBitmapSys(coms);
-        heroMoveSys = new HeroMoveSys(coms);
+        heroMoveSys = new HeroMoveSys(coms, app.assetService);
         frictionSys = new FrictionSys(coms);
         enemyMoveSys = new EnemyMoveSys(coms);
         bulletSys = new BulletSys(coms, heapsScene);

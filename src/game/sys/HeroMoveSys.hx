@@ -2,6 +2,7 @@ package game.sys;
 
 class HeroMoveSys {
     var coms:ComStore;
+    var assetService:heaps.AssetService;
     var query = new heat.ecs.ComQuery();
     public var onActionSlot(default, null):heat.event.Slot<EAction>;
     public var onCollisionSlot(default, null):heat.event.Slot<col.ECollision>;
@@ -9,10 +10,11 @@ class HeroMoveSys {
     var bulletSignalEmitter = new heat.event.SignalEmitter<ESpawnBullet>();
     public var onKilledSlot(default, null):heat.event.Slot<EKilled>;
 
-    public function new(coms:ComStore) {
+    public function new(coms:ComStore, assetService:heaps.AssetService) {
         this.coms = coms;
+        this.assetService = assetService;
         query.with(coms.heroStates).with(coms.velocities).with(coms.mass)
-            .with(coms.objects);
+            .with(coms.bitmaps);
         onActionSlot = new heat.event.Slot(onAction);
         onCollisionSlot = new heat.event.Slot(onCollision);
         bulletSignal = bulletSignalEmitter.signal;
@@ -22,7 +24,7 @@ class HeroMoveSys {
     public function update(dt:Float) {
         query.run();
         for (id in query.result) {
-            var object = coms.objects[id];
+            var object = coms.bitmaps[id];
             var state = coms.heroStates[id];
             var vel = coms.velocities[id];
             var mass = coms.mass[id];
@@ -30,8 +32,16 @@ class HeroMoveSys {
             var moveRightCmd = !state.moveLeftCmd && state.moveRightCmd;
             var idleCmd = !moveLeftCmd && !moveRightCmd;
 
-            if (moveLeftCmd) state.faceDir = LEFT;
-            else if (moveRightCmd) state.faceDir = RIGHT;
+            if (moveLeftCmd) {
+                object.tile = assetService.getTileFromSpriteKind(
+                    IMG(hxd.Res.img.heroLeft_png, 0, 0, 32, 32, 16, 32));
+                state.faceDir = LEFT;
+            }
+            else if (moveRightCmd) {
+                state.faceDir = RIGHT;
+                object.tile = assetService.getTileFromSpriteKind(
+                    IMG(hxd.Res.img.heroRight_png, 0, 0, 32, 32, 16, 32));
+            }
 
             switch state.movingState {
                 case IDLE: {
