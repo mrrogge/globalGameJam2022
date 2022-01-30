@@ -3,7 +3,7 @@ package game;
 import com.*;
 import game.sys.*;
 
-class GameScene extends Scene {
+class GameScene extends game.Scene {
     var collisionSys:col.CollisionSys;
     var separationSys:SeparationSys;
     var timerSys:TimerSys;
@@ -17,6 +17,7 @@ class GameScene extends Scene {
     var enemyMoveSys:EnemyMoveSys;
     var bulletSys:BulletSys;
     var healthSys:HealthSys;
+    var cameraSys:CameraSys;
 
     override public function new(app:App)
     {
@@ -36,6 +37,7 @@ class GameScene extends Scene {
         enemyMoveSys = new EnemyMoveSys(coms);
         bulletSys = new BulletSys(coms, heapsScene);
         healthSys = new HealthSys(coms.healthComs);
+        cameraSys = new CameraSys(coms);
 
         //set the collision system filter
         collisionSys.filter = colFilter;
@@ -126,6 +128,8 @@ class GameScene extends Scene {
         collisionSys.update(dt);
         moveSys.updateVels(dt);
         scrollingBitmapSys.update(dt);
+        cameraSys.followHero();
+        cameraSys.update(dt);
         bulletSys.disposeBullets();
         enemyMoveSys.disposeEnemies();
     }

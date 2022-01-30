@@ -24,6 +24,8 @@ class ComStore {
     public var bulletDataComs(default, null) = new heat.ecs.ComMap<com.BulletData>();
     public var energyKinds(default, null) = new heat.ecs.ComMap<com.EnergyKind>();
     public var healthComs(default, null) = new heat.ecs.ComMap<com.Health>();
+    public var cameras(default, null) = new heat.ecs.ComMap<h2d.Camera>();
+    public var camConfigs(default, null) = new heat.ecs.ComMap<com.CameraConfig>();
 
     public function new() {}
 
