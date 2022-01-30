@@ -14,6 +14,7 @@ class GameScene extends Scene {
     var scrollingBitmapSys:ScrollingBitmapSys;
     var heroMoveSys:HeroMoveSys;
     var frictionSys:FrictionSys;
+    var enemyMoveSys:EnemyMoveSys;
 
     override public function new(app:App)
     {
@@ -30,6 +31,7 @@ class GameScene extends Scene {
         scrollingBitmapSys = new ScrollingBitmapSys(coms);
         heroMoveSys = new HeroMoveSys(coms);
         frictionSys = new FrictionSys(coms);
+        enemyMoveSys = new EnemyMoveSys(coms);
 
         //set the collision system filter
         collisionSys.filter = colFilter;
@@ -40,6 +42,7 @@ class GameScene extends Scene {
         heroMoveSys.onCollisionSlot.connect(collisionSys.collisionSignal);
         inputSys.keyEventSlot.connect(app.keyEventSignal);
         inputSys.mouseBtnEventSlot.connect(app.mouseBtnEventSignal);
+        enemyMoveSys.onCollisionSlot.connect(collisionSys.collisionSignal);
 
         //build the background
         new BackgroundBuilder(coms)
@@ -108,6 +111,7 @@ class GameScene extends Scene {
         gravitySys.update(dt);
         frictionSys.update(dt);
         heroMoveSys.update(dt);
+        enemyMoveSys.update(dt);
         moveSys.move(dt);
         collisionSys.update(dt);
         moveSys.updateVels(dt);

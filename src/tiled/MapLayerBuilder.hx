@@ -184,6 +184,7 @@ class MapLayerBuilder {
                             coms.mass[id] = 20;
                             coms.velocities[id] = new com.Velocity(0, 0,
                                 mapObject.x, mapObject.y, 150, 300);
+                            coms.enemyStates[id] = new com.EnemyState();
                         }
                     }
                 }
