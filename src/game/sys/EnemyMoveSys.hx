@@ -4,11 +4,14 @@ class EnemyMoveSys {
     var coms:ComStore;
     var query = new heat.ecs.ComQuery();
     public var onCollisionSlot:heat.event.Slot<col.ECollision>;
+    var disposedEnemyIds = new haxe.ds.GenericStack<heat.ecs.EntityId>();
+    public var onKilledSlot:heat.event.Slot<EKilled>;
 
     public function new(coms:ComStore) {
         this.coms = coms;
         query.with(coms.enemyStates).with(coms.velocities).with(coms.objects);
         onCollisionSlot = new heat.event.Slot(onCollision);
+        onKilledSlot = new heat.event.Slot(onKilled);
     }
 
     public function update(dt:Float) {
@@ -60,5 +63,26 @@ class EnemyMoveSys {
                 if (normalX < 0) enemyState.movingState = LEFT;
             }
         }
+    }
+
+    public function disposeEnemies() {
+        while (!disposedEnemyIds.isEmpty()) {
+            var id = disposedEnemyIds.pop();
+            coms.objects[id].remove();
+            coms.objects.remove(id);
+            coms.anims.remove(id);
+            coms.bitmaps.remove(id);
+            coms.enemyStates.remove(id);
+            coms.kindComs.remove(id);
+            coms.energyKinds.remove(id);
+            coms.collidables.remove(id);
+            coms.mass.remove(id);
+            coms.velocities.remove(id);
+            coms.healthComs.remove(id);
+        }
+    }
+
+    function onKilled(arg:EKilled) {
+        disposedEnemyIds.add(arg.targetId);
     }
 }

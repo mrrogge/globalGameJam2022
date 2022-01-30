@@ -16,6 +16,7 @@ class GameScene extends Scene {
     var frictionSys:FrictionSys;
     var enemyMoveSys:EnemyMoveSys;
     var bulletSys:BulletSys;
+    var healthSys:HealthSys;
 
     override public function new(app:App)
     {
@@ -34,19 +35,22 @@ class GameScene extends Scene {
         frictionSys = new FrictionSys(coms);
         enemyMoveSys = new EnemyMoveSys(coms);
         bulletSys = new BulletSys(coms, heapsScene);
+        healthSys = new HealthSys(coms.healthComs);
 
         //set the collision system filter
         collisionSys.filter = colFilter;
 
         //events
         separationSys.onCollisionSlot.connect(collisionSys.collisionSignal);
-        heroMoveSys.onActionSlot.connect(inputSys.actionSignal);
         heroMoveSys.onCollisionSlot.connect(collisionSys.collisionSignal);
-        inputSys.keyEventSlot.connect(app.keyEventSignal);
-        inputSys.mouseBtnEventSlot.connect(app.mouseBtnEventSignal);
         enemyMoveSys.onCollisionSlot.connect(collisionSys.collisionSignal);
         bulletSys.onCollisionSlot.connect(collisionSys.collisionSignal);
+        heroMoveSys.onActionSlot.connect(inputSys.actionSignal);
+        inputSys.keyEventSlot.connect(app.keyEventSignal);
+        inputSys.mouseBtnEventSlot.connect(app.mouseBtnEventSignal);
         bulletSys.onSpawnBulletSlot.connect(heroMoveSys.bulletSignal);
+        healthSys.onDamageSlot.connect(bulletSys.damageSignal);
+        enemyMoveSys.onKilledSlot.connect(healthSys.killedSignal);
 
         //build the background
         new BackgroundBuilder(coms)
@@ -120,6 +124,7 @@ class GameScene extends Scene {
         moveSys.updateVels(dt);
         scrollingBitmapSys.update(dt);
         bulletSys.disposeBullets();
+        enemyMoveSys.disposeEnemies();
     }
 
     function colFilter(id1:heat.ecs.EntityId, id2:heat.ecs.EntityId):Bool {

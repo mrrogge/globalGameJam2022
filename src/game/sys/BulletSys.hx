@@ -7,6 +7,10 @@ class BulletSys {
     public var onSpawnBulletSlot:heat.event.Slot<ESpawnBullet>;
     public var onCollisionSlot:heat.event.Slot<col.ECollision>;
     var disposedBulletIds = new haxe.ds.GenericStack<heat.ecs.EntityId>();
+    public var damageSignal:heat.event.ISignal<EDamage>;
+    var damageEmitter = new heat.event.SignalEmitter<EDamage>();
+    public var energizeSignal:heat.event.ISignal<EEnergize>;
+    var energizeEmitter = new heat.event.SignalEmitter<EEnergize>();
 
     public function new(coms:ComStore, scene:h2d.Scene) {
         this.coms = coms;
@@ -14,6 +18,8 @@ class BulletSys {
         query.with(coms.objects).with(coms.bulletDataComs);
         onSpawnBulletSlot = new heat.event.Slot(onSpawnBullet);
         onCollisionSlot = new heat.event.Slot(onCollision);
+        damageSignal = damageEmitter.signal;
+        energizeSignal = energizeEmitter.signal;
     }
 
     public function update(dt:Float) {
@@ -92,29 +98,75 @@ class BulletSys {
             disposedBulletIds.add(arg.id2);
         }
         else if (kind1.match(BULLET(HERO)) && kind2.match(ENEMY)) {
-            //damage enemy TODO
+            var bulletEnergy = coms.energyKinds[arg.id1];
+            var targetEnergy = coms.energyKinds[arg.id2];
+            if (!bulletEnergy.equals(targetEnergy)) {
+                damageEmitter.emit({
+                    damage: 1,
+                    targetId: arg.id2
+                });
+            }
+            else {
+                energizeEmitter.emit({
+                    targetId: arg.id2
+                });
+            }
             disposedBulletIds.add(arg.id1); 
         }
         else if (kind1.match(ENEMY) && kind2.match(BULLET(HERO))) {
-            //damage enemy TODO
+            var bulletEnergy = coms.energyKinds[arg.id2];
+            var targetEnergy = coms.energyKinds[arg.id1];
+            if (!bulletEnergy.equals(targetEnergy)) {
+                damageEmitter.emit({
+                    damage: 1,
+                    targetId: arg.id1
+                });
+            }
+            else {
+                energizeEmitter.emit({
+                    targetId: arg.id1
+                });
+            }
             disposedBulletIds.add(arg.id2);
         }
         else if (kind1.match(BULLET(ENEMY)) && kind2.match(HERO)) {
-            //damage hero TODO
+            damageEmitter.emit({
+                damage: 1,
+                targetId: arg.id2
+            });
             disposedBulletIds.add(arg.id1);
         }
         else if (kind1.match(HERO) && kind2.match(BULLET(ENEMY))) {
-            //damage hero TODO
+            damageEmitter.emit({
+                damage: 1,
+                targetId: arg.id1
+            });
             disposedBulletIds.add(arg.id2);
         }
         else if (kind1.match(BULLET(HERO)) && kind2.match(BULLET(ENEMY))) {
-            //light/dark logic TODO
+            var heroEnergy = coms.energyKinds[arg.id1];
+            var enemyEnergy = coms.energyKinds[arg.id2];
+            if (heroEnergy.equals(enemyEnergy)) {
+                energizeEmitter.emit({
+                    targetId: arg.id2
+                });
+            }
+            else {
+                disposedBulletIds.add(arg.id2);
+            }
             disposedBulletIds.add(arg.id1);
-            disposedBulletIds.add(arg.id2);
         }
         else if (kind1.match(BULLET(ENEMY)) && kind2.match(BULLET(HERO))) {
-            //light/dark logic TODO
-            disposedBulletIds.add(arg.id1);
+            var heroEnergy = coms.energyKinds[arg.id2];
+            var enemyEnergy = coms.energyKinds[arg.id1];
+            if (heroEnergy.equals(enemyEnergy)) {
+                energizeEmitter.emit({
+                    targetId: arg.id1
+                });
+            }
+            else {
+                disposedBulletIds.add(arg.id1);
+            }
             disposedBulletIds.add(arg.id2);
         }
     }

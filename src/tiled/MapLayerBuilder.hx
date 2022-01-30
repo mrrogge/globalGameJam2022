@@ -166,6 +166,16 @@ class MapLayerBuilder {
                         }
                     }
 
+                    //energy
+                    switch mapObject.type {
+                        case "enemy1": {
+                            coms.energyKinds[id] = com.EnergyKind.LIGHT;
+                        }        
+                        case "enemy2": {
+                            coms.energyKinds[id] = com.EnergyKind.DARK;
+                        }                
+                    }
+
                     //other
                     switch mapObject.type {
                         case "barrier": {
@@ -188,6 +198,7 @@ class MapLayerBuilder {
                             coms.velocities[id] = new com.Velocity(0, 0,
                                 mapObject.x, mapObject.y, 150, 750);
                             coms.enemyStates[id] = new com.EnemyState();
+                            coms.healthComs[id] = new com.Health(3);
                         }
                     }
                 }

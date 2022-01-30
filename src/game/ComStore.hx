@@ -23,6 +23,7 @@ class ComStore {
     public var enemyStates(default, null) = new heat.ecs.ComMap<com.EnemyState>();
     public var bulletDataComs(default, null) = new heat.ecs.ComMap<com.BulletData>();
     public var energyKinds(default, null) = new heat.ecs.ComMap<com.EnergyKind>();
+    public var healthComs(default, null) = new heat.ecs.ComMap<com.Health>();
 
     public function new() {}
 
