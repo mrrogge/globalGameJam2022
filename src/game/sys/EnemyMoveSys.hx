@@ -6,12 +6,17 @@ class EnemyMoveSys {
     public var onCollisionSlot:heat.event.Slot<col.ECollision>;
     var disposedEnemyIds = new haxe.ds.GenericStack<heat.ecs.EntityId>();
     public var onKilledSlot:heat.event.Slot<EKilled>;
+    public var spawnBulletSignal:heat.event.ISignal<ESpawnBullet>;
+    var spawnBulletEmitter = new heat.event.SignalEmitter<ESpawnBullet>();
+    public var onEnergizedSlot:heat.event.Slot<EEnergize>;
 
     public function new(coms:ComStore) {
         this.coms = coms;
         query.with(coms.enemyStates).with(coms.velocities).with(coms.objects);
         onCollisionSlot = new heat.event.Slot(onCollision);
         onKilledSlot = new heat.event.Slot(onKilled);
+        spawnBulletSignal = spawnBulletEmitter.signal;
+        onEnergizedSlot = new heat.event.Slot(onEnergized);
     }
 
     public function update(dt:Float) {
@@ -84,5 +89,31 @@ class EnemyMoveSys {
 
     function onKilled(arg:EKilled) {
         disposedEnemyIds.add(arg.targetId);
+    }
+
+    function spawnBulletFromAngle(angle:Float, speed:Float, x:Float, y:Float, 
+    energy:EnergyKind) 
+    {
+        spawnBulletEmitter.emit(new ESpawnBullet()
+            .setPos(x, y-16)
+            .setVel(Math.cos(angle)*speed, Math.sin(angle)*speed)
+            .setKind(com.Kind.BulletKind.ENEMY, energy)
+        );
+    }
+
+    function onEnergized(arg:EEnergize) {
+        var state = coms.enemyStates[arg.targetId];
+        var object = coms.objects[arg.targetId];
+        var energy = coms.energyKinds[arg.targetId];
+        if (state == null || object == null || energy == null) return;
+        var speed = 100;
+        spawnBulletFromAngle(0, speed, object.x, object.y-16, energy);
+        spawnBulletFromAngle(Math.PI/4, speed, object.x, object.y-16, energy);
+        spawnBulletFromAngle(Math.PI/2, speed, object.x, object.y-16, energy);
+        spawnBulletFromAngle(Math.PI*3/4, speed, object.x, object.y-16, energy);
+        spawnBulletFromAngle(Math.PI, speed, object.x, object.y-16, energy);
+        spawnBulletFromAngle(Math.PI*5/4, speed, object.x, object.y-16, energy);
+        spawnBulletFromAngle(Math.PI*3/2, speed, object.x, object.y-16, energy);
+        spawnBulletFromAngle(Math.PI*7/4, speed, object.x, object.y-16, energy);
     }
 }
