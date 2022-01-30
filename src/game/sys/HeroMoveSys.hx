@@ -100,7 +100,6 @@ class HeroMoveSys {
                 }
                 case RISE_DEC: {
                     state.jumpDecTween.update(dt);
-                    trace(state.jumpVel, state.jumpDecTween.delta);
                     state.jumpVel -= state.jumpDecTween.delta;
                     object.y -= state.jumpVel * dt;
                     if (state.jumpDecTween.justFinished || state.jumpVel <= 0) {

@@ -17,7 +17,6 @@ class EnemyMoveSys {
             var state = coms.enemyStates[id];
             var vel = coms.velocities[id];
             var object = coms.objects[id];
-            // trace(vel.x);
 
             switch state.movingState {
                 case LEFT: object.x -= speed*dt;

@@ -18,9 +18,7 @@ class GravitySys {
             object.y += mass * g * dt;
             if (velocity.y > 0) {
                 object.y += velocity.y * mass * g * dt / 20;
-                // trace(velocity.y);
             }
-            // velocity.y += mass * g * dt;
         }
     }
 }
